@@ -15,3 +15,7 @@ Router有两个目的。
 
 - 指定对应的action来处理request。
 - 创建route helper供controller和view来使用, 如`new_user_path`, `new_user_url`
+
+## Commands
+- `bin/rails server` 运行rails程序
+- `bin/rails server -p $PORT -b $IP` 在一个特定的port或IP运行
