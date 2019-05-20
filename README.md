@@ -16,7 +16,7 @@ Router有两个目的。
 - 指定对应的action来处理request。
 - 创建route helper供controller和view来使用, 如`new_user_path`, `new_user_url`
 
-## Route的格式
+### Route的格式
 
 如有一个叫`Welcome`的controlller，里面包含一个叫`first_message`的action，那么产生的path helper是`welcome_first_message_path`。即格式为`controllerName_actionName_path`
 
