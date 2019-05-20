@@ -18,7 +18,7 @@ Router有两个目的。
 
 ### Route的格式
 
-如有一个叫`Welcome`的controlller，里面包含一个叫`first_message`的action，那么产生的path helper是`welcome_first_message_path`。即格式为`controllerName_actionName_path`
+如有一个叫`Welcome`的controller，里面包含一个叫`first_message`的action，那么产生的path helper是`welcome_first_message_path`。即格式为`controllerName_actionName_path`
 
 Prefix | Verb | URI Pattern | Controller#Action
 --- | --- | --- | ---
