@@ -57,7 +57,7 @@ end
 
 UsersController.
 
-`rails g controller users
+`rails g controller users`
 
 `controllers/users_controller.rb`
 
@@ -94,7 +94,7 @@ end
 
 `views/users/new.html.erb`
 
-```ruby
+```html
 <h1>Sign Up</h1>
 
 <%= form_for @user do |f| %>
@@ -127,7 +127,7 @@ end
 
 `views/users/show.html.erb`
 
-```ruby
+```html
 <h1>My homepage</h1>
 
 <%= puts @is_successfully_created %>
@@ -144,3 +144,4 @@ end
 
 <p>This is your homepage. Enjoy.</p>
 ```
+
