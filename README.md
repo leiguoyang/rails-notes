@@ -81,8 +81,6 @@ class UsersController < ApplicationController
       # if successfully create the user account, show the user's homepage
       @is_successfully_created = true
       
-      puts @is_successfully_created
-      
       redirect_to @user
     else
       render "new"
@@ -91,7 +89,7 @@ class UsersController < ApplicationController
   
   private
     def user_params
-      params.require(:user).permit(:email, :password, :password_confirmation)
+      params.require(:user).permit(:email, :password)
     end
 end
 ```
@@ -120,10 +118,6 @@ end
   <div class="field">
     <%= f.label :password %><br />
     <%= f.password_field :password %>
-  </div>
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation %>
   </div>
   <div class="actions"><%= f.submit "Sign Up" %></div>
 <% end %>
