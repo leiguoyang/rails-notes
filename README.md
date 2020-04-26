@@ -10,6 +10,10 @@ Migration就是对数据库进行更改。有两个作用。
 
 `bin/rails db:rollback`就是撤销上一次的migration.
 
+If you would like to execute migrations in another environment, for instance in production, you must explicitly pass it when invoking the command:
+
+`bin/rails db:migrate RAILS_ENV=production`
+
 ## Router
 Router有两个目的。
 
