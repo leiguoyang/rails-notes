@@ -143,3 +143,71 @@ end
 <p>This is your homepage. Enjoy.</p>
 ```
 
+## Use Bootstrap in Rails
+
+The following procedure references <a href="https://github.com/twbs/bootstrap-rubygem/blob/master/README.md">https://github.com/twbs/bootstrap-rubygem/blob/master/README.md</a>.
+
+First, add two gems to your 'Gemfile'.
+
+```ruby
+# Use bootstrap
+gem 'bootstrap', '~> 4.4.1'
+gem 'jquery-rails'
+```
+
+Run `bundle` to install the gems and restart your server if it is running.
+
+Second, rename `app/asset/stylesheets/application.css` to `app/asset/stylesheets/application.scss`. Remove all the `*= require` and `*= require_tree` statements in this file. Finally, add `@import "bootstrap";` to the file. The file may look like this now.
+
+```scss
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+
+
+ */
+@import "bootstrap";
+```
+
+Third, Add Bootstrap dependencies and Bootstrap to your `application.js`.
+
+```js
+//= require jquery3
+//= require popper
+//= require bootstrap-sprockets
+```
+
+The file may look like this now.
+
+```js
+// This is a manifest file that'll be compiled into application.js, which will include all the files
+// listed below.
+//
+// Any JavaScript/Coffee file within this directory, lib/assets/javascripts, or any plugin's
+// vendor/assets/javascripts directory can be referenced here using a relative path.
+//
+// It's not advisable to add code directly here, but if you do, it'll appear at the bottom of the
+// compiled file. JavaScript code in this file should be added after the last require_* statement.
+//
+// Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
+// about supported directives.
+//
+//= require rails-ujs
+//= require activestorage
+//= require turbolinks
+//= require_tree .
+//= require jquery3
+//= require popper
+//= require bootstrap-sprockets
+```
+
+Now you are free to use bootstarp on your project.
