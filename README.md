@@ -145,9 +145,9 @@ end
 
 ## Use Bootstrap in Rails
 
-The following procedure references <a href="">https://github.com/twbs/bootstrap-rubygem/blob/master/README.md</a>.
+The following procedure references <a href="https://github.com/twbs/bootstrap-rubygem/blob/master/README.md">https://github.com/twbs/bootstrap-rubygem/blob/master/README.md</a>.
 
-First, add two gem to your 'Gemfile'.
+First, add two gems to your 'Gemfile'.
 
 ```ruby
 # Use bootstrap
