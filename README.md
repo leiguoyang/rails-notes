@@ -211,3 +211,60 @@ The file may look like this now.
 ```
 
 Now you are free to use bootstarp on your project.
+
+## Authentication and authorization
+
+Here is my understanding.
+
+```ruby
+class ArticlesController < ApplicationController
+  def index
+    @articles = Article.all.order('created_at DESC')
+  end
+  
+  def show
+    @article = Article.find(params[:id])  
+  end
+  
+  def new
+    @article = Article.new
+  end
+  
+  def edit
+    # before the edit page is shown to the user, must check whether the user who request is the owner of this resource, like an article or a like
+    @article = Article.find(params[:id])
+    # if user_who_request == resource_owner
+    #   send the edit page to the user_who_request
+    # else
+    #   reject
+    # end
+    
+  end
+  
+  def create
+    @article = Article.new(article_params)
+    if @article.save
+      render 'show'
+    else
+      render 'new'
+    end
+  end
+  
+  def update
+    @article = Article.find(params[:id])
+    # before updating the resource, must check whether the user who request is the owner of this resource, like an article or a like
+    # I guessing i am doing the authorization now, seems I know more what atuhorizatio is.
+    if @article.update(article_params)
+      render 'show'
+    else
+      render 'edit'
+    end
+  end
+  
+  private
+  def article_params
+    params.require(:article).permit(:title, :text)
+  end
+end
+```
+
