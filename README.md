@@ -268,3 +268,172 @@ class ArticlesController < ApplicationController
 end
 ```
 
+## Use carrierwave
+
+- Reference [https://github.com/carrierwaveuploader/carrierwave](https://github.com/carrierwaveuploader/carrierwave)
+- 
+### Step 1 Add `carrierwave` gem to the `Gemfile`.
+
+```ruby
+gem 'carrierwave', '~> 2.0'
+```
+
+Then run `bundle` to install it. Restart your server if already running.
+
+### Step2 Add a column for your model in the database to hold the url to the file 
+
+Say you have a `Profile` model and want to upload a picture.
+
+```bash
+rails g migration add_picture_to_profiles picture:string
+```
+
+Then run `rails db:migrate` to update the database.
+
+### Step3 Create an uploader
+
+```bash
+rails g uploader Picture
+```
+
+Now a file called `app/uploaders/picture_uploader.rb` shoulb be created.
+
+```ruby
+class PictureUploader < CarrierWave::Uploader::Base
+  # Include RMagick or MiniMagick support:
+  # include CarrierWave::RMagick
+  # include CarrierWave::MiniMagick
+
+  # Choose what kind of storage to use for this uploader:
+  storage :file
+  # storage :fog
+
+  # Override the directory where uploaded files will be stored.
+  # This is a sensible default for uploaders that are meant to be mounted:
+  def store_dir
+    "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
+  end
+
+  # Provide a default URL as a default if there hasn't been a file uploaded:
+  # def default_url(*args)
+  #   # For Rails 3.1+ asset pipeline compatibility:
+  #   # ActionController::Base.helpers.asset_path("fallback/" + [version_name, "default.png"].compact.join('_'))
+  #
+  #   "/images/fallback/" + [version_name, "default.png"].compact.join('_')
+  # end
+
+  # Process files as they are uploaded:
+  # process scale: [200, 300]
+  #
+  # def scale(width, height)
+  #   # do something
+  # end
+
+  # Create different versions of your uploaded files:
+  # version :thumb do
+  #   process resize_to_fit: [50, 50]
+  # end
+
+  # Add a white list of extensions which are allowed to be uploaded.
+  # For images you might use something like this:
+  # def extension_whitelist
+  #   %w(jpg jpeg gif png)
+  # end
+
+  # Override the filename of the uploaded files:
+  # Avoid using model.id or version_name here, see uploader/store.rb for details.
+  # def filename
+  #   "something.jpg" if original_filename
+  # end
+end
+```
+
+Step4 Mount your uploader to the model
+
+In `profile.rb` add this line of code.
+
+```ruby
+class Profile < ApplicationRecord
+  belongs_to :user
+  mount_uploader :picture, PictureUploader
+end
+```
+
+Now you can upload the file and stored it.
+
+?How is the file url is created?
+
+!必须对文件类型进行限制，如上传图片时只允许特定的格式，不然像Android可以将任意的文件进行上传。
+
+## Resize images
+!you need to process the picture before uploaded them to the server, for example to resize it.
+
+### Step 1 Install imagemagick
+Run this command to install imagemagick to your OS.
+
+```bash
+sudo apt-get install imagemagick
+```
+
+Then add this gem to your `Gemfile`.
+
+```
+gem 'mini_magick'
+```
+
+Then run `bundle` to install it.
+
+### Step 2 Edit `app/uploaders/picture_uploader.rb`
+
+```ruby
+class PictureUploader < CarrierWave::Uploader::Base
+  # Include RMagick or MiniMagick support:
+  # include CarrierWave::RMagick
+  include CarrierWave::MiniMagick
+
+  # Choose what kind of storage to use for this uploader:
+  storage :file
+  # storage :fog
+
+  # Override the directory where uploaded files will be stored.
+  # This is a sensible default for uploaders that are meant to be mounted:
+  def store_dir
+    "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
+  end
+
+  # Provide a default URL as a default if there hasn't been a file uploaded:
+  # def default_url(*args)
+  #   # For Rails 3.1+ asset pipeline compatibility:
+  #   # ActionController::Base.helpers.asset_path("fallback/" + [version_name, "default.png"].compact.join('_'))
+  #
+  #   "/images/fallback/" + [version_name, "default.png"].compact.join('_')
+  # end
+
+  # Process files as they are uploaded:
+  # process scale: [200, 300]
+  
+  process resize_to_fit: [500, 500]
+  
+  # def scale(width, height)
+  #   # do something
+  # end
+
+  # Create different versions of your uploaded files:
+  version :thumb do
+    process resize_to_fit: [96, 96]
+  end
+
+  # Add a white list of extensions which are allowed to be uploaded.
+  # For images you might use something like this:
+  # def extension_whitelist
+  #   %w(jpg jpeg gif png)
+  # end
+
+  # Override the filename of the uploaded files:
+  # Avoid using model.id or version_name here, see uploader/store.rb for details.
+  # def filename
+  #   "something.jpg" if original_filename
+  # end
+end
+```
+
