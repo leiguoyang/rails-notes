@@ -437,3 +437,6 @@ class PictureUploader < CarrierWave::Uploader::Base
 end
 ```
 
+## Associations
+
+对各个model建立associations的目的是方便存取数据，如`User.followers`,关键还是要先建好表和确定表之间的关联。建表是最基础和最重要的，实际上也没associations这么难理解。要多练多看才能准确使用associations的`has_many`, `belongs_to`这些方法。
