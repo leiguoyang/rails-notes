@@ -1,5 +1,17 @@
 # Rails notes
 
+## Table of content
+
+- [Migration](#migration)
+- [Router](#router)
+- [Commands](#commands)
+- [Sign up](#sign-up)
+- [Use Bootstrap in Rails](#use-bootstrap-in-rails)
+- [Authentication and authorization](#authentication-and-authorization)
+- [Use carrierwave](#use-carrierwave)
+- [Resize images](#resize-images)
+- [Associations](#associations)
+
 ## Migration
 Migration就是对数据库进行更改。有两个作用。
 
