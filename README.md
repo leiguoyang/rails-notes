@@ -2,6 +2,7 @@
 
 ## Table of content
 
+- [Controller](#controller)
 - [Migration](#migration)
 - [Router](#router)
 - [Commands](#commands)
@@ -11,6 +12,33 @@
 - [Use carrierwave](#use-carrierwave)
 - [Resize images](#resize-images)
 - [Associations](#associations)
+
+## Controller
+
+When you use the command to create a controller, a view directory also created for your controller, like `app/views/home`.
+
+```bash
+$ rails g controller Home
+```
+
+And you will see this lines on your screen.
+
+```
+Running via Spring preloader in process 2006
+      create  app/controllers/home_controller.rb
+      invoke  erb
+      create    app/views/home
+      invoke  test_unit
+      create    test/controllers/home_controller_test.rb
+      invoke  helper
+      create    app/helpers/home_helper.rb
+      invoke    test_unit
+      invoke  assets
+      invoke    coffee
+      create      app/assets/javascripts/home.coffee
+      invoke    scss
+      create      app/assets/stylesheets/home.scss
+```
 
 ## Migration
 Migration就是对数据库进行更改。有两个作用。
