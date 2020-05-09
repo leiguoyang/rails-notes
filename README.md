@@ -41,6 +41,20 @@ Running via Spring preloader in process 2006
       create      app/assets/stylesheets/home.scss
 ```
 
+### Controller的类型
+一种是用来处理resource类，例如articles, messages等等。另一种是处理非resource类的，例如用户登录，或一些页面。处理resource类的，就要进行权限管理。
+
+```ruby
+class LoginsController < ApplicationController
+  # The purpose of LoginsController is to provide a form to let the user to input
+  # their credentials, including name and password in order to log in
+  # and handle their login request
+  def new
+    
+  end
+end
+```
+
 ## Migration
 Migration就是对数据库进行更改。有两个作用。
 
