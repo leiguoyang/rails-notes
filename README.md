@@ -6,6 +6,7 @@
 - [Router](#router)
 - [Commands](#commands)
 - [Sign up](#sign-up)
+- [Log in](#log-in)
 - [Use Bootstrap in Rails](#use-bootstrap-in-rails)
 - [Authentication and authorization](#authentication-and-authorization)
 - [Use carrierwave](#use-carrierwave)
@@ -154,6 +155,99 @@ end
 
 <p>This is your homepage. Enjoy.</p>
 ```
+## Log in
+其实我还不知道什么叫登录，目前理解的是创建一个session ID来存放user的id。而session ID和cookie又怎么关联起来我还没弄懂。
+
+实际上登录是假的。你在Edge登录完后，照样可以在Firefox上登录，说明登录只是将你当前的游览器和服务器进行了一种关联而已。如果在浏览器登录完后在打开一个新的tab尝试去登录发现不行，说明cookie的scope是整个浏览器，而不仅仅是当前的tab.
+
+### Step1 Create a Sessions Controller
+
+```
+rails g controller sessions
+```
+
+My `sessions_controller.rb` looks like this.
+
+```ruby
+class SessionsController < ApplicationController
+  
+  def new
+    if logged_in?
+      @message = 'You already logged in.'
+      redirect_to root_path
+    else
+      render 'new'
+    end
+  end
+  
+  def create
+    unless logged_in?
+      user = User.find_by(name: params[:login][:name])
+    
+      if user
+        if user.authenticate(params[:login][:password])
+          # Authentication passed
+          # The user login successfully
+          session[:user_id] = user.id
+          @message = '登录成功'
+          redirect_to root_path
+        else
+          @message = '密码不正确'
+          render 'new'
+        end
+      else
+        @message = '用户名不正确'
+        render 'new'
+      end
+    end
+  end
+
+  def logout
+    session[:user_id] = nil
+    @message = 'You have successfully logged out.'
+    redirect_to root_path
+  end
+end
+```
+
+The log in form `app/views/sessions/new.html.erb` looks like this.
+
+```html
+<% if @message %>
+<div class="alert alert-info"><%= @message %></div>
+<% end %>
+<h1 class="mb-5">登录</h1>
+<%= form_for :login do |f| %>
+  <div class="form-group">
+    <%= f.label :name, '用户名' %>
+    <%= f.text_field :name, autofocus: true, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :password, '密码' %>
+    <%= f.password_field :password, class: 'form-control' %>
+  </div>
+  <div>
+    <%= f.submit '登录', class: 'btn btn-primary' %>
+  </div>
+<% end %>
+```
+
+我认为在获取任何一种资源前都必须确认用户是否已登录，所以我定义一个叫	`logged_in`的方法放在`ApplicationController`里，这样每一个controller可以使用。
+
+```ruby
+class ApplicationController < ActionController::Base
+
+  def logged_in?
+    session[:user_id] != nil
+  end
+
+end
+```
+
+也许有更合理的放置地方。
+
+
+
 
 ## Use Bootstrap in Rails
 
